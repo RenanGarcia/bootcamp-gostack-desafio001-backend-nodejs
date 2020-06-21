@@ -31,7 +31,24 @@ app.post("/repositories", (request, response) => {
 });
 
 app.put("/repositories/:id", (request, response) => {
-  // TODO
+  const { id } = request.params;
+  const { likes, ...onlyValidProperties } = request.body;
+
+  let repository = repositories.find((repo) => repo.id === id);
+
+  if (!repository) {
+    return response.status(400).send();
+  }
+
+  repository = { ...repository, ...onlyValidProperties };
+
+  repositories.forEach((repo) => {
+    if (repo.id === id) {
+      repositories[repo.id] = repository;
+    }
+  });
+
+  return response.json(repository);
 });
 
 app.delete("/repositories/:id", (request, response) => {
