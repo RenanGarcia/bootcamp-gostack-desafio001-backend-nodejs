@@ -39,7 +39,21 @@ app.delete("/repositories/:id", (request, response) => {
 });
 
 app.post("/repositories/:id/like", (request, response) => {
-  // TODO
+  const { id } = request.params;
+
+  const repository = repositories.find((repo) => repo.id === id);
+
+  if (!repository) {
+    return response.status(400).send();
+  }
+
+  repository.likes++;
+
+  repositries = repositories.map((repo) =>
+    repo.id === id ? { ...repo, likes: repo.likes + 1 } : repo
+  );
+
+  return response.json({ likes: repository.likes });
 });
 
 module.exports = app;
