@@ -9,10 +9,21 @@ app.use(cors());
 
 let repositories = [];
 
+/**
+ * GET /repositories
+ *
+ * @returns repositories []
+ *
+ */
 app.get("/repositories", (request, response) => {
   return response.json(repositories);
 });
 
+/**
+ * POST /repositories
+ *
+ * @returns repository {id, title, url, techs, likes}
+ */
 app.post("/repositories", (request, response) => {
   const { title, url, techs } = request.body;
 
@@ -29,6 +40,11 @@ app.post("/repositories", (request, response) => {
   return response.json(repository);
 });
 
+/**
+ * PUT /repositories/:id
+ *
+ * @returns repository {id, title, url, techs, likes}
+ */
 app.put("/repositories/:id", (request, response) => {
   const { id } = request.params;
   const { likes, ...onlyValidProperties } = request.body;
@@ -50,6 +66,11 @@ app.put("/repositories/:id", (request, response) => {
   return response.json(repository);
 });
 
+/**
+ * DELETE /repositories/:id
+ *
+ * @returns repositories []
+ */
 app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
 
@@ -62,6 +83,11 @@ app.delete("/repositories/:id", (request, response) => {
   return response.status(204).json(repositories);
 });
 
+/**
+ * POST /repositories/:id/like
+ *
+ * @returns object {like}
+ */
 app.post("/repositories/:id/like", (request, response) => {
   const { id } = request.params;
 
